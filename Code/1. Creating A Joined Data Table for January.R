@@ -28,9 +28,3 @@ data = data %>%  mutate(`Day`= day(data$`ProducedAtFormatted`))
 #confirm_all_days = data %>% group_by(`Day`) %>% summarize(n())
 
 write.csv(data, file= "./Data/MachiningReportJanuary.xlsx")
-
-TimedataByProduct = data %>%  group_by(`Program Name`,`Hour`,`Power Status`) %>%  summarise(sum(`Time Difference`))
-
-StationNamedata = count(Machining_Report_26_30 , `Station Name` )
-
-DImode = Machining_Report_26_30 %>% filter(`Machining Mode`== "DI") %>%  group_by(`Machining Mode`, `Station Name`) %>%  summarise()
