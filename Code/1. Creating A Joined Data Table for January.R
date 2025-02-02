@@ -27,4 +27,4 @@ data = data %>%  mutate(`Day`= day(data$`ProducedAtFormatted`))
 
 #confirm_all_days = data %>% group_by(`Day`) %>% summarize(n())
 
-write.csv(data, file= "./Data/MachiningReportJanuary.xlsx")
+?write.csv(data, file= "./Data/MachiningReportJanuary.csv",row.names = FALSE)
