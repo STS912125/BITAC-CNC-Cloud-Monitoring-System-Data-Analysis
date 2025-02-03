@@ -19,12 +19,12 @@ library(lubridate)
 
 data$`ProducedAtFormatted`=   ymd_hms(data$`Produced At`)
 
-data = data %>% mutate(`Time Difference (second)` = as.numeric(difftime(data$`ProducedAtFormatted`, lead(data$`ProducedAtFormatted`))))
-data$`Time Difference`[nrow(data)] <- 0
+data = data %>% mutate(`Time Difference` = as.numeric(difftime(data$`ProducedAtFormatted`, lead(data$`ProducedAtFormatted`))))
+data$`Time Difference` [nrow(data)] <- 0
 
 data = data %>%  mutate(`Hour`= hour(data$`ProducedAtFormatted`))
 data = data %>%  mutate(`Day`= day(data$`ProducedAtFormatted`))
 
 #confirm_all_days = data %>% group_by(`Day`) %>% summarize(n())
 
-?write.csv(data, file= "./Data/MachiningReportJanuary.csv",row.names = FALSE)
+write.csv(data, file= "./Data/MachiningReportJanuary.csv",row.names = FALSE)
