@@ -13,6 +13,14 @@ StationWise_Hourly_Availability = data %>% filter(`Time.Difference` < 7200) %>%
 StationWise_Daily_Availability = StationWise_Hourly_Availability %>% group_by(`Day`,`Station.Name`) %>% 
   summarise(`Daily Availability` = last(`Availability`))
 
+StationWise_Hourly_Performance = data %>% filter(`Time.Difference` < 7200) %>% 
+  group_by(`Day`,`Station.Name`) %>% 
+  arrange(Hour) %>% 
+  mutate(`Produced Counter` = `M30.Counter.1`-lead(M30.Counter.1)) %>% 
+  ungroup() %>% 
+  group_by(`Day`,`Station.Name`,`Hour`)%>% 
+  reframe(`Total Produced` = cumsum(`Produced Counter`)) 
+
 ProductWise_Hourly_Availability = 
 # StationNamedata = count(data , `Station.Name` )
 # ThisCycleData = count(data , `This.Cycle` )
