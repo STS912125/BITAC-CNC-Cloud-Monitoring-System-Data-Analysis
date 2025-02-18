@@ -10,6 +10,11 @@ My main goal is to do something interesting with this data. Since I'm also learn
 
 Honestly, I don’t know exactly where this project is going, but that’s part of the fun!
 
+Since my findings and notes on the CNC Cloud Monitoring System are not directly related to the code, I am keeping them as a separate live document on Google Docs. You can access and follow my latest updates here:
+
+[Findings & Notes on the CNC Cloud Monitoring System](https://docs.google.com/document/d/1CJULp8SM4bix6GLSg86VqD7ajgxGSvh5zD6q1L6QrDg/edit?usp=sharing)
+
+
 ## Data Collection
 The data comes from daily machining reports, which I had to manually download. Each file represents a single day’s report in Excel format. Since there is no automatic API access (at least for now), I wrote a script to merge all reports for a given month into a single dataset.
 The website doesn't let you download large amounts of data at once, which is pretty frustrating.
