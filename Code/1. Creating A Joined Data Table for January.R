@@ -19,11 +19,20 @@ library(lubridate)
 
 data$`ProducedAtFormatted`=   ymd_hms(data$`Produced At`)
 
-data = data %>% mutate(`Time Difference` = as.numeric(difftime(data$`ProducedAtFormatted`, lead(data$`ProducedAtFormatted`))))
-data$`Time Difference` [nrow(data)] <- 0
+# Time Difference = seconds between a log and the previous (older) log FROM THE SAME MACHINE.
+# Logs from different stations are interleaved in the raw files, so we group by station and
+# sort each station's logs newest-first before using lead(). Each station's oldest log has no
+# earlier log to compare with, so its Time Difference is set to 0.
+data = data %>%
+  group_by(`Station Name`) %>%
+  arrange(desc(`ProducedAtFormatted`), .by_group = TRUE) %>%
+  mutate(`Time Difference` = as.numeric(difftime(`ProducedAtFormatted`, lead(`ProducedAtFormatted`), units = "secs"))) %>%
+  mutate(`Time Difference` = coalesce(`Time Difference`, 0)) %>%
+  ungroup() %>%
+  arrange(desc(`ProducedAtFormatted`))
 
-data = data %>%  mutate(`Hour`= hour(data$`ProducedAtFormatted`))
-data = data %>%  mutate(`Day`= day(data$`ProducedAtFormatted`))
+data = data %>%  mutate(`Hour`= hour(`ProducedAtFormatted`))
+data = data %>%  mutate(`Day`= day(`ProducedAtFormatted`))
 
 #confirm_all_days = data %>% group_by(`Day`) %>% summarize(n())
 
